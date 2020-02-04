@@ -6,11 +6,20 @@ public class GalgeServer
 	public static void main(String[] arg) throws Exception
 	{
 		// Enten: Kør programmet 'rmiregistry' fra mappen med .class-filerne, eller:
+/*
 		java.rmi.registry.LocateRegistry.createRegistry(1099); // start i server-JVM
 
 		GalgeLegI k = new GalgeLegImpl();
 		Naming.rebind("rmi://localhost:1099/galgetjeneste", k);
 		System.out.println("GalgeTjeneste registreret.");
+
+*/
+
+		java.rmi.registry.LocateRegistry.createRegistry(20099); // lyt på port 20099
+		GalgeLegI k = new GalgeLegImpl();
+		System.setProperty("java.rmi.server.hostname", "freilarsen.ddns.net/");
+		Naming.rebind("rmi://freilarsen.ddns.net/galgetjeneste", k);
+
 
 	}
 }
