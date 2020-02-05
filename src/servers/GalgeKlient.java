@@ -1,52 +1,93 @@
 package servers;
 
 import java.rmi.Naming;
-import java.util.ArrayList;
+import java.rmi.RemoteException;
+import java.util.Scanner;
 
 public class GalgeKlient {
-	public static void main(String[] arg) throws Exception {
-		GalgeLegI k = (GalgeLegI) Naming.lookup("rmi://localhost:1099/galgetjeneste");
-		System.out.println(		k.getSynligtOrd());
+    static GalgeLegI k;
+    static Scanner scanner;
 
-		k.gætBogstav("e");
-		System.out.println(		k.getSynligtOrd());
+    public static void main(String[] arg) throws Exception {
+        k = (GalgeLegI) Naming.lookup("rmi://localhost:1099/galgetjeneste");
+        //GalgeLegI k = (GalgeLegI) Naming.lookup("rmi://freilarsen.ddns.net:20099/galgetjeneste");
+        dialogMethod();
+    }
 
-		k.gætBogstav("a");
-		System.out.println(		k.getSynligtOrd());
+    public static void dialogMethod() throws Exception {
+        scanner = new Scanner(System.in);
 
-		k.gætBogstav("o");
-		System.out.println(		k.getSynligtOrd());
+        System.out.println("**********************************************");
+        System.out.println("**                                          **");
+        System.out.println("** VELKOMMEN TIL GALGELEG **");
+        System.out.println("**                                          **");
+        System.out.println("**********************************************");
+        System.out.println();
+        System.out.println();
+        System.out.println("Indtast 'exit' for at afbryde\n Tryk 'Enter' for at fortsætte");
+      /*  if (scanner.nextLine().toLowerCase().equalsIgnoreCase("exit")) {
+            System.out.println("OK - afslutter programmet");
+            System.exit(0);
+        }*/
 
-		k.gætBogstav("i");
-		System.out.println(		k.getSynligtOrd());
+        while (true) try {
+            System.out.println();
+            System.out.println("1 Spil med standard indstillinger");
+            System.out.println("2 Spil med ord hentet fra dr");
+            System.out.print("Skriv valg: ");
+            String valgString = scanner.next();
+            int valg = 0;
+            try {
+                valg = Integer.parseInt(valgString);
+            } catch (Exception e) {
+                if (valgString.equalsIgnoreCase("exit")) {
+                    break;
+                } else {
+                    System.out.println("Ulovligt valg");
+                }
+            }
 
+            if (valg == 1) {
+                k.nulstil();
+                guessMethod();
 
-		/*
+            } else if (valg == 2) {
+                System.out.println("Henter ord fra DR!");
+                k.hentOrdFraDr();
+                Thread.sleep(2);
+                guessMethod();
 
-		k.overførsel(100);
-		k.overførsel(50);
-		System.out.println("Saldo er: " + k.saldo());
-		k.overførsel(-150);
-		System.out.println("Saldo ved slut er: " + k.saldo());
-		ArrayList<String> bevægelser = k.bevægelser();
-		System.out.println("Bevægelser er: " + bevægelser);
-		k.setNavn("Ny konto");
-		System.out.println(k.getNavn());
-*/
+            } else {
+                System.out.println("Ulovligt valg");
+            }
 
+            System.out.println("\nSpillet er slut!");
+            if (k.erSpilletTabt()) {
+                System.out.println("Trist, du tabte!");
+                System.out.println("Ordet var " + k.getOrdet());
+                break;
+            } else {
+                //k.erSpilletVundet()
+                System.out.println("Tillykke du vandt!");
+            }
 
-/*
-		long tid = System.currentTimeMillis();
-		for (int i=0; i<100; i++) {
-			k.overførsel(1);
-			k.overførsel(-1);
-		}
-		long dt = System.currentTimeMillis() - tid;
-		System.out.println( "Kørselstiden for RMI var: "+ dt );
-*/
+        } catch (
+                Throwable t) {
+            t.printStackTrace();
+            scanner.nextLine();
+        }
+        System.out.println("Afslutter programmet... ");
+        System.exit(0);
+    }
 
-
-
-	}
+    static private void guessMethod() throws RemoteException {
+        System.out.println("Skriv et bogstav og tryk 'enter' for at gætte");
+        while (!k.erSpilletSlut() && !k.erSpilletTabt() && !k.erSpilletVundet()) {
+            System.out.println("\nForkerte gæt " + k.getAntalForkerteBogstaver());
+            System.out.println(k.getSynligtOrd());
+            k.gætBogstav(scanner.next());
+        }
+    }
 }
+
 
