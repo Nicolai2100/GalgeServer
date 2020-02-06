@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
-public interface GalgeLegI extends java.rmi.Remote {
+public interface GalgeLogikI extends java.rmi.Remote {
 
     ArrayList<String> getBrugteBogstaver() throws java.rmi.RemoteException;
 

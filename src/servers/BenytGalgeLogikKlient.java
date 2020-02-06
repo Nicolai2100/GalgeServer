@@ -4,13 +4,13 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class GalgeKlient {
-    static GalgeLegI k;
+public class BenytGalgeLogikKlient {
+    static GalgeLogikI k;
     static Scanner scanner;
 
     public static void main(String[] arg) throws Exception {
-        k = (GalgeLegI) Naming.lookup("rmi://localhost:1099/galgetjeneste");
-        //GalgeLegI k = (GalgeLegI) Naming.lookup("rmi://freilarsen.ddns.net:20099/galgetjeneste");
+        k = (GalgeLogikI) Naming.lookup("rmi://localhost:1099/galgetjeneste");
+        //GalgeLogikI k = (GalgeLogikI) Naming.lookup("rmi://freilarsen.ddns.net:20099/galgetjeneste");
         dialogMethod();
     }
 
@@ -19,16 +19,12 @@ public class GalgeKlient {
 
         System.out.println("**********************************************");
         System.out.println("**                                          **");
-        System.out.println("** VELKOMMEN TIL GALGELEG **");
+        System.out.println("**          VELKOMMEN TIL GALGELEG          **");
         System.out.println("**                                          **");
         System.out.println("**********************************************");
         System.out.println();
         System.out.println();
         System.out.println("Indtast 'exit' for at afbryde\n Tryk 'Enter' for at fortsætte");
-      /*  if (scanner.nextLine().toLowerCase().equalsIgnoreCase("exit")) {
-            System.out.println("OK - afslutter programmet");
-            System.exit(0);
-        }*/
 
         while (true) try {
             System.out.println();
@@ -43,7 +39,6 @@ public class GalgeKlient {
                 if (valgString.equalsIgnoreCase("exit")) {
                     break;
                 } else {
-                    System.out.println("Ulovligt valg");
                 }
             }
 
@@ -58,17 +53,20 @@ public class GalgeKlient {
                 guessMethod();
 
             } else {
-                System.out.println("Ulovligt valg");
+                System.out.println("\nUlovligt valg!");
             }
 
-            System.out.println("\nSpillet er slut!");
-            if (k.erSpilletTabt()) {
-                System.out.println("Trist, du tabte!");
-                System.out.println("Ordet var " + k.getOrdet());
-                break;
-            } else {
-                //k.erSpilletVundet()
-                System.out.println("Tillykke du vandt!");
+            if (k.erSpilletSlut() || k.erSpilletTabt() || k.erSpilletVundet()) {
+
+                System.out.println("\nSpillet er slut!");
+                if (k.erSpilletTabt()) {
+                    System.out.println("Trist, du tabte!");
+                    System.out.println("Ordet var " + k.getOrdet());
+                    break;
+                } else {
+                    //k.erSpilletVundet()
+                    System.out.println("Tillykke du vandt!");
+                }
             }
 
         } catch (

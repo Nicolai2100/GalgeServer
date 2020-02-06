@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
-public class GalgeLegImpl extends UnicastRemoteObject implements GalgeLegI {
+public class GalgeLogikImpl extends UnicastRemoteObject implements GalgeLogikI {
 
     ArrayList<String> muligeOrd = new ArrayList<String>();
     private String ordet;
@@ -22,7 +22,7 @@ public class GalgeLegImpl extends UnicastRemoteObject implements GalgeLegI {
     private boolean spilletErVundet;
     private boolean spilletErTabt;
 
-    public GalgeLegImpl() throws java.rmi.RemoteException {
+    public GalgeLogikImpl() throws java.rmi.RemoteException {
         muligeOrd.add("bil");
         muligeOrd.add("computer");
         muligeOrd.add("programmering");
