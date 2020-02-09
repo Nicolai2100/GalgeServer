@@ -9,8 +9,8 @@ public class BenytGalgeLogikKlient {
     static Scanner scanner;
 
     public static void main(String[] arg) throws Exception {
-        k = (GalgeLogikI) Naming.lookup("rmi://localhost:1099/galgetjeneste");
-        //GalgeLogikI k = (GalgeLogikI) Naming.lookup("rmi://freilarsen.ddns.net:20099/galgetjeneste");
+        //k = (GalgeLogikI) Naming.lookup("rmi://localhost:1099/galgetjeneste");
+        k = (GalgeLogikI) Naming.lookup("rmi://freilarsen.ddns.net:20099/galgetjeneste");
         dialogMethod();
     }
 

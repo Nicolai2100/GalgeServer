@@ -5,17 +5,21 @@ import java.rmi.Naming;
 public class GalgeLogikServer {
     public static void main(String[] arg) throws Exception {
         // Enten: Kør programmet 'rmiregistry' fra mappen med .class-filerne, eller:
+/*
 		java.rmi.registry.LocateRegistry.createRegistry(1099); // start i server-JVM
 		GalgeLogikI k = new GalgeLogikImpl();
 		Naming.rebind("rmi://localhost:1099/galgetjeneste", k);
 		System.out.println("GalgeTjeneste registreret.");
+*/
 
-        /*java.rmi.registry.LocateRegistry.createRegistry(8080); // lyt på port 20099
+        java.rmi.registry.LocateRegistry.createRegistry(20099); // lyt på port 20099
         GalgeLogikI k = new GalgeLogikImpl();
-        Naming.rebind("rmi://localhost:1099/galgetjeneste", k);
-        System.setProperty("java.rmi.server.hostname", "freilarsen.ddns.net/");
-        Naming.rebind("rmi://freilarsen.ddns.net/galgetjeneste", k);*/
-    }
+
+		System.setProperty("java.rmi.server.hostname", "freilarsen.ddns.net");
+		Naming.rebind("rmi://localhost:20099/galgetjeneste", k);
+		System.out.println("GalgeTjeneste registreret.");
+
+	}
 }
 /*
 Hvis klienter skulle forbinde til server "javabog.dk" på port 20099 skulle der rettes til
