@@ -16,7 +16,7 @@ public class GalgeLogikServer {
         GalgeLogikI k = new GalgeLogikImpl();
 
 		System.setProperty("java.rmi.server.hostname", "freilarsen.ddns.net");
-		Naming.rebind("rmi://localhost:20099/galgetjeneste", k);
+		Naming.rebind("rmi://freilarsen.ddns.net:20099/galgetjeneste", k);
 		System.out.println("GalgeTjeneste registreret.");
 
 	}
